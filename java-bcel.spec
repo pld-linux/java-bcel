@@ -51,6 +51,17 @@ sukcesem w ró¿nych projektach, takich jak kompilatory, optymalizatory,
 narzêdzia utrudniaj±ce analizê oraz narzêdzia do analizy, z których
 najpopularniejszym jest procesor XSLT Xalan.
 
+%package doc
+Summary:	Byte Code Engineering Library documentation
+Summary(pl):	Dokumentacja do biblioteki do obróbki bytecodu Javy
+Group:		Documentation
+
+%description doc
+Byte Code Engineering Library documentation.
+
+%description doc -l pl
+Dokumentacja do biblioteki do obróbki bytecodu Javy.
+
 %prep
 %setup -q -n bcel-%{version}
 %patch0 -p1
@@ -73,5 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE.txt docs/*
+%doc LICENSE.txt
 %{_javalibdir}/*.jar
+
+%files doc
+%defattr(644,root,root,755)
+%doc docs/*
