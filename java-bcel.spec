@@ -1,17 +1,18 @@
 Summary:        Byte Code Engineering Library
+Summary(pl):	Biblioteka do obróbki bytecodu Javy
 Name:           jakarta-bcel
 Version:        5.1
 Release:        0.1
 License:        Apache Software License
+Group:		Development/Languages/Java
 Source0:        http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
 # Source0-md5:	c9ebfa7373eb4416e590205fd0005039
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-manifest.patch
 URL:            http://jakarta.apache.org/bcel/
-Group:		Development/Languages/Java
-Requires:       jakarta-regexp
 BuildRequires:  jakarta-ant
 BuildRequires:	jakarta-regexp
+Requires:       jakarta-regexp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -33,6 +34,22 @@ learn about the Java Virtual Machine (JVM) and the format of Java
 projects such as compilers, optimizers, obsfuscators and analysis
 tools, the most popular probably being the Xalan XSLT processor at
 Apache.
+
+%description -l pl
+BCEL (Byte Code Engineering Library, poprzednio znana jako JavaClass)
+ma umo¿liwiæ wygodne analizowanie, tworzenie i obróbkê (binarnych)
+plików klas Javy (tych z nazw± koñcz±c± siê na .class). Klasy s±
+reprezentowane przez obiekty zawieraj±ce wszystkie symboliczne
+informacje o danej klasie, w szczególno¶ci metody, pola i instrukcje
+bytecodu. Obiekty te mog± byæ odczytywane z istniej±cego pliku,
+przekszta³cane przez program (np. wczytuj±cy klasy w czasie dzia³ania)
+i zrzucane z powrotem do pliku. Jeszcze ciekawszym zastosowaniem jest
+tworzenie klas od zera w czasie dzia³ania programu. Biblioteka BCEL
+mo¿e byæ tak¿e u¿yteczna, je¶li chcemy nauczyæ siê czego¶ o maszynie
+wirtualnej Javy (JVM) oraz formacie plików .class. BCEL jest u¿ywana z
+sukcesem w ró¿nych projektach, takich jak kompilatory, optymalizatory,
+narzêdzia utrudniaj±ce analizê oraz narzêdzia do analizy, z których
+najpopularniejszym jest procesor XSLT Xalan.
 
 %prep
 %setup -q -n bcel-%{version}
