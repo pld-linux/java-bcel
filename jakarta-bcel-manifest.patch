@@ -1,0 +1,6 @@
+diff -Nur bcel-5.1.orig/manifest.txt bcel-5.1.chng/manifest.txt
+--- bcel-5.1.orig/manifest.txt	Thu Jan  1 01:00:00 1970
++++ bcel-5.1.chng/manifest.txt	Fri Jun 27 12:25:21 2003
+@@ -0,0 +1,2 @@
++Manifest-Version: 1.0
++Main-Class: listclass
