@@ -1,18 +1,18 @@
-Summary:        Byte Code Engineering Library
+Summary:	Byte Code Engineering Library
 Summary(pl):	Biblioteka do obróbki bytecodu Javy
-Name:           jakarta-bcel
-Version:        5.1
-Release:        0.1
-License:        Apache Software License
+Name:		jakarta-bcel
+Version:	5.1
+Release:	0.1
+License:	Apache Software License
 Group:		Development/Languages/Java
-Source0:        http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
+Source0:	http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
 # Source0-md5:	c9ebfa7373eb4416e590205fd0005039
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-manifest.patch
-URL:            http://jakarta.apache.org/bcel/
-BuildRequires:  jakarta-ant
+URL:		http://jakarta.apache.org/bcel/
+BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-regexp
-Requires:       jakarta-regexp
+Requires:	jakarta-regexp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
