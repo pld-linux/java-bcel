@@ -1,0 +1,12 @@
+diff -Nur bcel-5.1.orig/build.xml bcel-5.1.chng/build.xml
+--- bcel-5.1.orig/build.xml	Fri Apr 25 10:06:15 2003
++++ bcel-5.1.chng/build.xml	Fri Jun 27 12:18:05 2003
+@@ -65,7 +65,7 @@
+   <target name="build" depends="compile"/>
+ 
+   <!-- Jar the library -->
+-  <target name="jar" depends="examples">
++  <target name="jar" depends="compile">
+     <jar jarfile="${build.dir}/${name}.jar" 
+          basedir="${build.dest}"
+ 	 manifest="${basedir}/manifest.txt"
