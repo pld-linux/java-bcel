@@ -2,7 +2,7 @@ Summary:	Byte Code Engineering Library
 Summary(pl):	Biblioteka do obróbki bytecodu Javy
 Name:		jakarta-bcel
 Version:	5.1
-Release:	0.1
+Release:	1
 License:	Apache Software License
 Group:		Development/Languages/Java
 Source0:	http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
@@ -15,8 +15,6 @@ BuildRequires:	jakarta-regexp
 Requires:	jakarta-regexp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_javalibdir	%{_datadir}/java
 
 %description
 The Byte Code Engineering Library (formerly known as JavaClass) is
@@ -69,15 +67,15 @@ Dokumentacja do biblioteki do obróbki bytecodu Javy.
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-CLASSPATH=%{_javalibdir}/regexp.jar
+CLASSPATH=%{_javadir}/regexp.jar
 export CLASSPATH
 ant jar apidocs
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javalibdir}
-cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javalibdir}
-ln -sf bcel.jar $RPM_BUILD_ROOT%{_javalibdir}/bcel-%{version}.jar
+install -d $RPM_BUILD_ROOT%{_javadir}
+cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}
+ln -sf bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -85,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt
-%{_javalibdir}/*.jar
+%{_javadir}/*.jar
 
 %files doc
 %defattr(644,root,root,755)
