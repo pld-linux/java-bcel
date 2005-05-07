@@ -1,17 +1,20 @@
 Summary:	Byte Code Engineering Library
-Summary(pl):	Biblioteka do obróbki bytecodu Javy
+Summary(pl):	Biblioteka do obróbki bajtkodu Javy
 Name:		jakarta-bcel
 Version:	5.1
 Release:	1
 License:	Apache Software License
 Group:		Development/Languages/Java
-Source0:	http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
-# Source0-md5:	c9ebfa7373eb4416e590205fd0005039
+# a lot of junk (all other formats) inside -src.tar.gz, use -src.zip
+Source0:	http://www.apache.org/dist/jakarta/bcel/source/bcel-%{version}-src.zip
+# Source0-md5:	23767d4e735543c25b950ab86c8f56b1
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-manifest.patch
+Patch2:		%{name}-jdk15.patch
 URL:		http://jakarta.apache.org/bcel/
 BuildRequires:	jakarta-ant
 BuildRequires:	jakarta-regexp
+BuildRequires:	unzip
 Requires:	jakarta-regexp
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -39,7 +42,7 @@ ma umo¿liwiæ wygodne analizowanie, tworzenie i obróbkê (binarnych)
 plików klas Javy (tych z nazw± koñcz±c± siê na .class). Klasy s±
 reprezentowane przez obiekty zawieraj±ce wszystkie symboliczne
 informacje o danej klasie, w szczególno¶ci metody, pola i instrukcje
-bytecodu. Obiekty te mog± byæ odczytywane z istniej±cego pliku,
+bajtkodu. Obiekty te mog± byæ odczytywane z istniej±cego pliku,
 przekszta³cane przez program (np. wczytuj±cy klasy w czasie dzia³ania)
 i zrzucane z powrotem do pliku. Jeszcze ciekawszym zastosowaniem jest
 tworzenie klas od zera w czasie dzia³ania programu. Biblioteka BCEL
@@ -51,19 +54,20 @@ najpopularniejszym jest procesor XSLT Xalan.
 
 %package doc
 Summary:	Byte Code Engineering Library documentation
-Summary(pl):	Dokumentacja do biblioteki do obróbki bytecodu Javy
+Summary(pl):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
 
 %description doc
 Byte Code Engineering Library documentation.
 
 %description doc -l pl
-Dokumentacja do biblioteki do obróbki bytecodu Javy.
+Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 
 %prep
 %setup -q -n bcel-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
