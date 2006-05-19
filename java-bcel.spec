@@ -12,7 +12,7 @@ Patch0:		%{name}-build.patch
 Patch1:		%{name}-manifest.patch
 Patch2:		%{name}-jdk15.patch
 URL:		http://jakarta.apache.org/bcel/
-BuildRequires:	jakarta-ant
+BuildRequires:	ant
 BuildRequires:	jakarta-regexp
 BuildRequires:	unzip
 Requires:	jakarta-regexp
