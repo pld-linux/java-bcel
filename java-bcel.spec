@@ -60,6 +60,7 @@ najpopularniejszym jest procesor XSLT Xalan.
 Summary:	Byte Code Engineering Library documentation
 Summary(pl):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
+Obsoletes:	jakarta-bcel-doc
 
 %description javadoc
 Byte Code Engineering Library documentation.
