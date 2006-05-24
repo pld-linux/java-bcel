@@ -14,9 +14,13 @@ Patch2:		%{name}-jdk15.patch
 URL:		http://jakarta.apache.org/bcel/
 BuildRequires:	ant
 BuildRequires:	jakarta-regexp
+BuildRequires:	jpackage-utils
+BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	jakarta-regexp
+Provides:	bcel
 BuildArch:	noarch
+ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,15 +56,15 @@ sukcesem w ró¿nych projektach, takich jak kompilatory, optymalizatory,
 narzêdzia utrudniaj±ce analizê oraz narzêdzia do analizy, z których
 najpopularniejszym jest procesor XSLT Xalan.
 
-%package doc
+%package javadoc
 Summary:	Byte Code Engineering Library documentation
 Summary(pl):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
 
-%description doc
+%description javadoc
 Byte Code Engineering Library documentation.
 
-%description doc -l pl
+%description javadoc -l pl
 Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 
 %prep
@@ -71,15 +75,20 @@ Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-CLASSPATH=%{_javadir}/regexp.jar
-export CLASSPATH
+
+export CLASSPATH="`build-classpath regexp`"
+export JAVA_HOME="%{java_home}"
+
 ant jar apidocs
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javadir}
-cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}
-ln -sf bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{name}-%{version}}
+
+cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
+ln -sf bcel-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/bcel.jar
+
+cp -R docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,6 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE.txt
 %{_javadir}/*.jar
 
-%files doc
+%files javadoc
 %defattr(644,root,root,755)
-%doc docs/*
+%doc %{_javadocdir}/%{name}-%{version}
