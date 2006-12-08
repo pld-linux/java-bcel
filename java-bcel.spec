@@ -2,7 +2,7 @@ Summary:	Byte Code Engineering Library
 Summary(pl):	Biblioteka do obróbki bajtkodu Javy
 Name:		jakarta-bcel
 Version:	5.1
-Release:	1
+Release:	2
 License:	Apache Software License
 Group:		Development/Languages/Java
 # a lot of junk (all other formats) inside -src.tar.gz, use -src.zip
@@ -26,19 +26,18 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The Byte Code Engineering Library (formerly known as JavaClass) is
 intended to give users a convenient possibility to analyze, create,
-and manipulate (binary) Java class files (those ending with
-.class). Classes are represented by objects which contain all the
-symbolic information of the given class: methods, fields and byte code
-instructions, in particular.  Such objects can be read from an
-existing file, be transformed by a program (e.g. a class loader at
-run-time) and dumped to a file again. An even more interesting
-application is the creation of classes from scratch at run-time. The
-Byte Code Engineering Library (BCEL) may be also useful if you want to
-learn about the Java Virtual Machine (JVM) and the format of Java
-.class files.  BCEL is already being used successfully in several
-projects such as compilers, optimizers, obsfuscators and analysis
-tools, the most popular probably being the Xalan XSLT processor at
-Apache.
+and manipulate (binary) Java class files (those ending with .class).
+Classes are represented by objects which contain all the symbolic
+information of the given class: methods, fields and byte code
+instructions, in particular. Such objects can be read from an existing
+file, be transformed by a program (e.g. a class loader at run-time)
+and dumped to a file again. An even more interesting application is
+the creation of classes from scratch at run-time. The Byte Code
+Engineering Library (BCEL) may be also useful if you want to learn
+about the Java Virtual Machine (JVM) and the format of Java .class
+files. BCEL is already being used successfully in several projects
+such as compilers, optimizers, obsfuscators and analysis tools, the
+most popular probably being the Xalan XSLT processor at Apache.
 
 %description -l pl
 BCEL (Byte Code Engineering Library, poprzednio znana jako JavaClass)
@@ -60,6 +59,7 @@ najpopularniejszym jest procesor XSLT Xalan.
 Summary:	Byte Code Engineering Library documentation
 Summary(pl):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
+Requires:	jpackage-utils
 Obsoletes:	jakarta-bcel-doc
 
 %description javadoc
@@ -80,7 +80,7 @@ find . -name "*.jar" -exec rm -f {} \;
 export CLASSPATH="`build-classpath regexp`"
 export JAVA_HOME="%{java_home}"
 
-ant jar apidocs
+%ant jar apidocs
 
 %install
 rm -rf $RPM_BUILD_ROOT
