@@ -1,5 +1,5 @@
 Summary:	Byte Code Engineering Library
-Summary(pl.UTF-8):   Biblioteka do obróbki bajtkodu Javy
+Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
 Name:		jakarta-bcel
 Version:	5.1
 Release:	2
@@ -57,7 +57,7 @@ najpopularniejszym jest procesor XSLT Xalan.
 
 %package javadoc
 Summary:	Byte Code Engineering Library documentation
-Summary(pl.UTF-8):   Dokumentacja do biblioteki do obróbki bajtkodu Javy
+Summary(pl.UTF-8):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	jakarta-bcel-doc
