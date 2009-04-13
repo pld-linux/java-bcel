@@ -1,3 +1,4 @@
+%bcond_without	javadoc		# don't build javadoc
 %if "%{pld_release}" == "ti"
 %bcond_without	java_sun	# build with gcj
 %else
@@ -87,32 +88,42 @@ Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-find . -name "*.jar" -exec rm -f {} \;
+find -name "*.jar" -exec rm -f {} \;
 
 %build
 
 CLASSPATH="$(build-classpath regexp)"
 export JAVA_HOME="%{java_home}"
 
-%ant jar apidocs
+%ant jar %{?with_javadoc:apidocs}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{srcname}-%{version}}
+install -d $RPM_BUILD_ROOT%{_javadir}
 
-cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
-ln -sf bcel-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/bcel.jar
+cp -p bin/%{srcname}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
+ln -sf %{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}.jar
 
+%if %{with javadoc}
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 cp -R docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post javadoc
+ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt
 %{_javadir}/*.jar
 
+%if %{with javadoc}
 %files javadoc
 %defattr(644,root,root,755)
-%doc %{_javadocdir}/%{srcname}-%{version}
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
+%endif
