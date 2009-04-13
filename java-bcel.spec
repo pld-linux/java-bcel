@@ -1,26 +1,39 @@
+%if "%{pld_release}" == "ti"
+%bcond_without	java_sun	# build with gcj
+%else
+%bcond_with	java_sun	# build with java-sun
+%endif
+
+%include	/usr/lib/rpm/macros.java
+
+%define		srcname		bcel
 Summary:	Byte Code Engineering Library
 Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
-Name:		jakarta-bcel
+Name:		java-bcel
 Version:	5.1
 Release:	2
-License:	Apache Software License
-Group:		Development/Languages/Java
+License:	Apache v2.0
+Group:		Libriaries/Java
 # a lot of junk (all other formats) inside -src.tar.gz, use -src.zip
-Source0:	http://www.apache.org/dist/jakarta/bcel/source/bcel-%{version}-src.zip
+Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.zip
 # Source0-md5:	23767d4e735543c25b950ab86c8f56b1
-Patch0:		%{name}-build.patch
-Patch1:		%{name}-manifest.patch
-Patch2:		%{name}-jdk15.patch
+Patch0:		jakarta-%{srcname}-build.patch
+Patch1:		jakarta-%{srcname}-manifest.patch
+Patch2:		jakarta-%{srcname}-jdk15.patch
 URL:		http://jakarta.apache.org/bcel/
 BuildRequires:	ant
-BuildRequires:	jakarta-regexp
+%{!?with_java_sun:BuildRequires:	java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires:	java-sun}
+BuildRequires:	java-regexp
 BuildRequires:	jpackage-utils
+BuildRequires:	rpm >= 4.4.9-56
+BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	jakarta-regexp
-Provides:	bcel
+Requires:	java-regexp
+Provides:	jakarta-bcel
+Obsoletes:	jakarta-bcel
 BuildArch:	noarch
-ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -61,6 +74,7 @@ Summary(pl.UTF-8):	Dokumentacja do biblioteki do obróbki bajtkodu Javy
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	jakarta-bcel-doc
+Obsoletes:	jakarta-bcel-javadoc
 
 %description javadoc
 Byte Code Engineering Library documentation.
@@ -77,19 +91,19 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %build
 
-export CLASSPATH="`build-classpath regexp`"
+CLASSPATH="$(build-classpath regexp)"
 export JAVA_HOME="%{java_home}"
 
 %ant jar apidocs
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_javadocdir}/%{srcname}-%{version}}
 
 cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
 ln -sf bcel-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/bcel.jar
 
-cp -R docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -R docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -101,4 +115,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files javadoc
 %defattr(644,root,root,755)
-%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{srcname}-%{version}
