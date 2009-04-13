@@ -1,0 +1,4 @@
+- renamed to java-bcel
+- jdk bconds
+- include java rpm macros
+- allow build-classpath to die and break build process
