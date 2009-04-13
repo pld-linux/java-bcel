@@ -90,10 +90,9 @@ Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-find -name "*.jar" -exec rm -f {} \;
+find -name '*.jar' | xargs rm -f
 
 %build
-
 CLASSPATH="$(build-classpath regexp)"
 export JAVA_HOME="%{java_home}"
 
