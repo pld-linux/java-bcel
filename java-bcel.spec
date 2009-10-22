@@ -95,6 +95,7 @@ find -name '*.jar' | xargs rm -f
 %build
 CLASSPATH="$(build-classpath regexp)"
 export JAVA_HOME="%{java_home}"
+export LC_ALL=en_US
 
 %ant jar %{?with_javadoc:apidocs}
 
