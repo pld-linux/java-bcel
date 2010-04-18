@@ -1,11 +1,6 @@
 #
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
-%if "%{pld_release}" == "ti"
-%bcond_without	java_sun	# build with gcj
-%else
-%bcond_with	java_sun	# build with java-sun
-%endif
 
 %include	/usr/lib/rpm/macros.java
 
@@ -16,7 +11,7 @@ Name:		java-bcel
 Version:	5.1
 Release:	2
 License:	Apache v2.0
-Group:		Libriaries/Java
+Group:		Libraries/Java
 # a lot of junk (all other formats) inside -src.tar.gz, use -src.zip
 Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.zip
 # Source0-md5:	23767d4e735543c25b950ab86c8f56b1
@@ -25,11 +20,9 @@ Patch1:		jakarta-%{srcname}-manifest.patch
 Patch2:		jakarta-%{srcname}-jdk15.patch
 URL:		http://jakarta.apache.org/bcel/
 BuildRequires:	ant
-%{!?with_java_sun:BuildRequires:	java-gcj-compat-devel}
-%{?with_java_sun:BuildRequires:	java-sun}
 BuildRequires:	java-regexp
+BuildRequires:	jdk
 BuildRequires:	jpackage-utils
-BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
