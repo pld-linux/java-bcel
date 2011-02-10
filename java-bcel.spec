@@ -1,90 +1,123 @@
+#
+# Conditional build:
+%bcond_without	javadoc		# don't build javadoc
+
+%include	/usr/lib/rpm/macros.java
+
+%define		srcname		bcel
 Summary:	Byte Code Engineering Library
-Summary(pl):	Biblioteka do obróbki bytecodu Javy
-Name:		jakarta-bcel
-Version:	5.1
+Summary(pl.UTF-8):	Biblioteka do obrÃ³bki bajtkodu Javy
+Name:		java-bcel
+Version:	5.2
 Release:	1
-License:	Apache Software License
-Group:		Development/Languages/Java
-Source0:	http://jakarta.apache.org/builds/jakarta-bcel/release/v%{version}/bcel-%{version}-src.tar.gz
-# Source0-md5:	c9ebfa7373eb4416e590205fd0005039
-Patch0:		%{name}-build.patch
-Patch1:		%{name}-manifest.patch
+License:	Apache v2.0
+Group:		Libraries/Java
+Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.tar.gz
+# Source0-md5:	905b7e718e30e7ca726530ecf106e532
+Patch0:		jakarta-%{srcname}-manifest.patch
+Patch1:		%{name}-noproxy.patch
 URL:		http://jakarta.apache.org/bcel/
-BuildRequires:	jakarta-ant
-BuildRequires:	jakarta-regexp
-Requires:	jakarta-regexp
+BuildRequires:	ant
+BuildRequires:	java-regexp >= 1.2
+BuildRequires:	jdk
+BuildRequires:	jpackage-utils
+BuildRequires:	rpm-javaprov
+BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	unzip
+Requires:	java-regexp >= 1.2
+Provides:	jakarta-bcel
+Obsoletes:	jakarta-bcel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The Byte Code Engineering Library (formerly known as JavaClass) is
 intended to give users a convenient possibility to analyze, create,
-and manipulate (binary) Java class files (those ending with
-.class). Classes are represented by objects which contain all the
-symbolic information of the given class: methods, fields and byte code
-instructions, in particular.  Such objects can be read from an
-existing file, be transformed by a program (e.g. a class loader at
-run-time) and dumped to a file again. An even more interesting
-application is the creation of classes from scratch at run-time. The
-Byte Code Engineering Library (BCEL) may be also useful if you want to
-learn about the Java Virtual Machine (JVM) and the format of Java
-.class files.  BCEL is already being used successfully in several
-projects such as compilers, optimizers, obsfuscators and analysis
-tools, the most popular probably being the Xalan XSLT processor at
-Apache.
+and manipulate (binary) Java class files (those ending with .class).
+Classes are represented by objects which contain all the symbolic
+information of the given class: methods, fields and byte code
+instructions, in particular. Such objects can be read from an existing
+file, be transformed by a program (e.g. a class loader at run-time)
+and dumped to a file again. An even more interesting application is
+the creation of classes from scratch at run-time. The Byte Code
+Engineering Library (BCEL) may be also useful if you want to learn
+about the Java Virtual Machine (JVM) and the format of Java .class
+files. BCEL is already being used successfully in several projects
+such as compilers, optimizers, obsfuscators and analysis tools, the
+most popular probably being the Xalan XSLT processor at Apache.
 
-%description -l pl
+%description -l pl.UTF-8
 BCEL (Byte Code Engineering Library, poprzednio znana jako JavaClass)
-ma umo¿liwiæ wygodne analizowanie, tworzenie i obróbkê (binarnych)
-plików klas Javy (tych z nazw± koñcz±c± siê na .class). Klasy s±
-reprezentowane przez obiekty zawieraj±ce wszystkie symboliczne
-informacje o danej klasie, w szczególno¶ci metody, pola i instrukcje
-bytecodu. Obiekty te mog± byæ odczytywane z istniej±cego pliku,
-przekszta³cane przez program (np. wczytuj±cy klasy w czasie dzia³ania)
+ma umoÅ¼liwiÄ‡ wygodne analizowanie, tworzenie i obrÃ³bkÄ™ (binarnych)
+plikÃ³w klas Javy (tych z nazwÄ… koÅ„czÄ…cÄ… siÄ™ na .class). Klasy sÄ…
+reprezentowane przez obiekty zawierajÄ…ce wszystkie symboliczne
+informacje o danej klasie, w szczegÃ³lnoÅ›ci metody, pola i instrukcje
+bajtkodu. Obiekty te mogÄ… byÄ‡ odczytywane z istniejÄ…cego pliku,
+przeksztaÅ‚cane przez program (np. wczytujÄ…cy klasy w czasie dziaÅ‚ania)
 i zrzucane z powrotem do pliku. Jeszcze ciekawszym zastosowaniem jest
-tworzenie klas od zera w czasie dzia³ania programu. Biblioteka BCEL
-mo¿e byæ tak¿e u¿yteczna, je¶li chcemy nauczyæ siê czego¶ o maszynie
-wirtualnej Javy (JVM) oraz formacie plików .class. BCEL jest u¿ywana z
-sukcesem w ró¿nych projektach, takich jak kompilatory, optymalizatory,
-narzêdzia utrudniaj±ce analizê oraz narzêdzia do analizy, z których
+tworzenie klas od zera w czasie dziaÅ‚ania programu. Biblioteka BCEL
+moÅ¼e byÄ‡ takÅ¼e uÅ¼yteczna, jeÅ›li chcemy nauczyÄ‡ siÄ™ czegoÅ› o maszynie
+wirtualnej Javy (JVM) oraz formacie plikÃ³w .class. BCEL jest uÅ¼ywana z
+sukcesem w rÃ³Å¼nych projektach, takich jak kompilatory, optymalizatory,
+narzÄ™dzia utrudniajÄ…ce analizÄ™ oraz narzÄ™dzia do analizy, z ktÃ³rych
 najpopularniejszym jest procesor XSLT Xalan.
 
-%package doc
+%package javadoc
 Summary:	Byte Code Engineering Library documentation
-Summary(pl):	Dokumentacja do biblioteki do obróbki bytecodu Javy
+Summary(pl.UTF-8):	Dokumentacja do biblioteki do obrÃ³bki bajtkodu Javy
 Group:		Documentation
+Requires:	jpackage-utils
+Obsoletes:	jakarta-bcel-doc
+Obsoletes:	jakarta-bcel-javadoc
 
-%description doc
+%description javadoc
 Byte Code Engineering Library documentation.
 
-%description doc -l pl
-Dokumentacja do biblioteki do obróbki bytecodu Javy.
+%description javadoc -l pl.UTF-8
+Dokumentacja do biblioteki do obrÃ³bki bajtkodu Javy.
 
 %prep
 %setup -q -n bcel-%{version}
 %patch0 -p1
 %patch1 -p1
-find . -name "*.jar" -exec rm -f {} \;
+find -name '*.jar' | xargs rm -f
 
 %build
-CLASSPATH=%{_javadir}/regexp.jar
-export CLASSPATH
-ant jar apidocs
+CLASSPATH="$(build-classpath regexp)"
+export JAVA_HOME="%{java_home}"
+export LC_ALL=en_US
+
+%ant jar %{?with_javadoc:javadoc} \
+	-Dnoget=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
-cp -p bin/bcel.jar $RPM_BUILD_ROOT%{_javadir}
-ln -sf bcel.jar $RPM_BUILD_ROOT%{_javadir}/bcel-%{version}.jar
+
+cp -p target/%{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
+ln -sf %{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}.jar
+
+%if %{with javadoc}
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -R dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post javadoc
+ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
+
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt
-%{_javadir}/*.jar
+%{_javadir}/bcel-%{version}.jar
+%{_javadir}/bcel.jar
 
-%files doc
+%if %{with javadoc}
+%files javadoc
 %defattr(644,root,root,755)
-%doc docs/*
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
+%endif
