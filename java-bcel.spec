@@ -8,25 +8,23 @@
 Summary:	Byte Code Engineering Library
 Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
 Name:		java-bcel
-Version:	5.1
-Release:	2
+Version:	5.2
+Release:	1
 License:	Apache v2.0
 Group:		Libraries/Java
-# a lot of junk (all other formats) inside -src.tar.gz, use -src.zip
-Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.zip
-# Source0-md5:	23767d4e735543c25b950ab86c8f56b1
-Patch0:		jakarta-%{srcname}-build.patch
-Patch1:		jakarta-%{srcname}-manifest.patch
-Patch2:		jakarta-%{srcname}-jdk15.patch
+Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.tar.gz
+# Source0-md5:	905b7e718e30e7ca726530ecf106e532
+Patch0:		jakarta-%{srcname}-manifest.patch
+Patch1:		%{name}-noproxy.patch
 URL:		http://jakarta.apache.org/bcel/
 BuildRequires:	ant
-BuildRequires:	java-regexp
+BuildRequires:	java-regexp >= 1.2
 BuildRequires:	jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	java-regexp
+Requires:	java-regexp >= 1.2
 Provides:	jakarta-bcel
 Obsoletes:	jakarta-bcel
 BuildArch:	noarch
@@ -82,7 +80,6 @@ Dokumentacja do biblioteki do obróbki bajtkodu Javy.
 %setup -q -n bcel-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 find -name '*.jar' | xargs rm -f
 
 %build
@@ -90,18 +87,19 @@ CLASSPATH="$(build-classpath regexp)"
 export JAVA_HOME="%{java_home}"
 export LC_ALL=en_US
 
-%ant jar %{?with_javadoc:apidocs}
+%ant jar %{?with_javadoc:javadoc} \
+	-Dnoget=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
 
-cp -p bin/%{srcname}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
+cp -p target/%{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}-%{version}.jar
 ln -sf %{srcname}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{srcname}.jar
 
 %if %{with javadoc}
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
-cp -R docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -R dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 %endif
 
@@ -114,7 +112,8 @@ ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt
-%{_javadir}/*.jar
+%{_javadir}/bcel-%{version}.jar
+%{_javadir}/bcel.jar
 
 %if %{with javadoc}
 %files javadoc
