@@ -2,14 +2,13 @@
 # Conditional build:
 %bcond_without	javadoc		# don't build javadoc
 
-%include	/usr/lib/rpm/macros.java
-
 %define		srcname		bcel
+%include	/usr/lib/rpm/macros.java
 Summary:	Byte Code Engineering Library
 Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
 Name:		java-bcel
 Version:	5.2
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.tar.gz
@@ -25,7 +24,6 @@ BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 Requires:	java-regexp >= 1.2
-Provides:	jakarta-bcel
 Obsoletes:	jakarta-bcel
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
