@@ -8,7 +8,7 @@ Summary:	Byte Code Engineering Library
 Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
 Name:		java-bcel
 Version:	5.2
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Libraries/Java
 Source0:	http://www.apache.org/dist/jakarta/bcel/source/%{srcname}-%{version}-src.tar.gz
