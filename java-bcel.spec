@@ -3,7 +3,6 @@
 %bcond_without	javadoc		# don't build javadoc
 
 %define		srcname		bcel
-%include	/usr/lib/rpm/macros.java
 Summary:	Byte Code Engineering Library
 Summary(pl.UTF-8):	Biblioteka do obróbki bajtkodu Javy
 Name:		java-bcel
